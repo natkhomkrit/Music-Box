@@ -60,29 +60,19 @@
 
     // ===== AUDIO SETUP =====
     let audioContext = null;
-    let gainNode = null;
     let analyserNode = null;
     let audioElement = null;
     let mediaSource = null;
 
     function initAudio() {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        gainNode = audioContext.createGain();
-        analyserNode = audioContext.createAnalyser();
-        analyserNode.fftSize = 128;
-
-        gainNode.connect(analyserNode);
-        analyserNode.connect(audioContext.destination);
-
         audioElement = new Audio(CONFIG.AUDIO_SRC);
         audioElement.preload = 'auto';
         audioElement.loop = false;
+        audioElement.volume = 1;
 
         audioElement.addEventListener('canplaythrough', () => {
             if (!state.audioReady) {
                 state.audioReady = true;
-                mediaSource = audioContext.createMediaElementSource(audioElement);
-                mediaSource.connect(gainNode);
                 updateTotalTime();
             }
         });
@@ -98,6 +88,25 @@
             console.warn('Audio file not found. Place music.mp3 in the valentine folder.');
             state.audioReady = true;
         });
+    }
+
+    // Connect Web Audio API for waveform analysis (lazy, non-blocking)
+    function connectAnalyser() {
+        if (analyserNode || !audioElement) return;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyserNode = audioContext.createAnalyser();
+            analyserNode.fftSize = 128;
+            mediaSource = audioContext.createMediaElementSource(audioElement);
+            mediaSource.connect(analyserNode);
+            analyserNode.connect(audioContext.destination);
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        } catch (e) {
+            console.warn('Web Audio API not available, waveform disabled.');
+            analyserNode = null;
+        }
     }
 
     function updateTotalTime() {
@@ -116,7 +125,12 @@
     // Play at 1x forward only — cranking in any direction triggers play
     function startAudioPlayback() {
         if (!state.audioReady || !audioElement) return;
-        if (audioContext.state === 'suspended') {
+
+        // Try connecting analyser on first play
+        if (!analyserNode) {
+            connectAnalyser();
+        }
+        if (audioContext && audioContext.state === 'suspended') {
             audioContext.resume();
         }
 
@@ -126,10 +140,7 @@
         }
 
         if (!state.isPlaying) {
-            gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-            gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + CONFIG.FADE_DURATION);
-
+            audioElement.volume = 1;
             audioElement.play().catch(() => { });
             state.isPlaying = true;
         }
@@ -142,16 +153,19 @@
 
         state.pauseTimeout = setTimeout(() => {
             if (state.isPlaying && !state.isCranking) {
-                gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-                gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.001, audioContext.currentTime + CONFIG.FADE_DURATION);
-
-                setTimeout(() => {
-                    if (!state.isCranking) {
+                // Fade out using volume
+                let vol = audioElement.volume;
+                const fadeInterval = setInterval(() => {
+                    vol -= 0.1;
+                    if (vol <= 0) {
+                        vol = 0;
+                        clearInterval(fadeInterval);
                         audioElement.pause();
                         state.isPlaying = false;
+                        audioElement.volume = 1;
                     }
-                }, CONFIG.FADE_DURATION * 1000);
+                    audioElement.volume = Math.max(0, vol);
+                }, CONFIG.FADE_DURATION * 100);
             }
         }, CONFIG.PAUSE_DEBOUNCE);
     }
@@ -423,9 +437,6 @@
         initAudio();
 
         // Unlock audio on mobile (must happen inside user gesture)
-        if (audioContext && audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
         if (audioElement) {
             audioElement.play().then(() => {
                 audioElement.pause();
