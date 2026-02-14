@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="A digital hand crank music box — turn the handle to reveal your surprise">
+    <title>Music Box — For You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="icon" id="favicon" type="image/png" href="logo-valentine.png">
+    <script>
+        (function () {
+            var img = new Image();
+            img.onload = function () {
+                var c = document.createElement('canvas');
+                c.width = c.height = 64;
+                var ctx = c.getContext('2d');
+                ctx.beginPath();
+                ctx.arc(32, 32, 32, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.drawImage(img, 0, 0, 64, 64);
+                document.getElementById('favicon').href = c.toDataURL('image/png');
+            };
+            img.src = 'logo-valentine.png';
+        })();
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Start Screen -->
+    <div id="startScreen" class="start-screen">
+        <div class="start-content">
+            <h1 class="start-title">A little something<br><em>for you</em></h1>
+            <p class="start-subtitle">Tap anywhere to begin</p>
+            <div class="start-pulse"></div>
+        </div>
+    </div>
+
+    <!-- Main Music Box -->
+    <div id="musicBoxContainer" class="music-box-container hidden">
+        <!-- Music Box Assembly -->
+        <div class="music-box-assembly">
+            <!-- Photo Window (Left/Main) -->
+            <div class="photo-window">
+                <div class="photo-window-frame">
+                    <div id="photoStrip" class="photo-strip">
+                        <div class="photo-item" data-index="1">
+                            <img src="img/img4.png" alt="Photo 1">
+                        </div>
+                        <div class="photo-item" data-index="2">
+                            <img src="img/img3.png" alt="Photo 2">
+                        </div>
+                        <div class="photo-item" data-index="3">
+                            <img src="img/img2.png" alt="Photo 3">
+                        </div>
+                        <div class="photo-item" data-index="4">
+                            <img src="img/img5.png" alt="Photo 4">
+                        </div>
+                        <div class="photo-item" data-index="5">
+                            <img src="img/img6.png" alt="Photo 5">
+                        </div>
+                        <div class="photo-item" data-index="6">
+                            <img src="img/img7.png" alt="Photo 6">
+                        </div>
+                        <div class="photo-item" data-index="7">
+                            <img src="img/img8.png" alt="Photo 7">
+                        </div>
+                        <div class="photo-item" data-index="8">
+                            <img src="img/img9.png" alt="Photo 8">
+                        </div>
+                        <div class="photo-item" data-index="9">
+                            <img src="img/img10.png" alt="Photo 9">
+                        </div>
+                        <div class="photo-item" data-index="10">
+                            <img src="img/img11.png" alt="Photo 10">
+                        </div>
+                        <div class="photo-item" data-index="11">
+                            <img src="img/img12.png" alt="Photo 11">
+                        </div>
+                        <div class="photo-item" data-index="12">
+                            <img src="img/img13.png" alt="Photo 12">
+                        </div>
+                        <div class="photo-item" data-index="13">
+                            <img src="img/img14.png" alt="Photo 13">
+                        </div>
+                        <div class="photo-item" data-index="14">
+                            <img src="img/img15.png" alt="Photo 14">
+                        </div>
+                        <div class="photo-item" data-index="15">
+                            <img src="img/img16.png" alt="Photo 15">
+                        </div>
+                        <div class="photo-item" data-index="16">
+                            <img src="img/img17.png" alt="Photo 16">
+                        </div>
+                        <div class="photo-item" data-index="17">
+                            <img src="img/img18.png" alt="Photo 17">
+                        </div>
+                        <div class="photo-item" data-index="18">
+                            <img src="img/img19.png" alt="Photo 18">
+                        </div>
+                        <div class="photo-item" data-index="19">
+                            <img src="img/img20.png" alt="Photo 19">
+                        </div>
+                        <div class="photo-item" data-index="20">
+                            <img src="img/img21.png" alt="Photo 20">
+                        </div>
+                        <div class="photo-item" data-index="21">
+                            <img src="img/img22.png" alt="Photo 21">
+                        </div>
+                        <div class="photo-item" data-index="22">
+                            <img src="img/img23.png" alt="Photo 22">
+                        </div>
+                        <div class="photo-item" data-index="23">
+                            <img src="img/img24.png" alt="Photo 23">
+                        </div>
+                        <div class="photo-item" data-index="24">
+                            <img src="img/img25.png" alt="Photo 24">
+                        </div>
+                        <div class="photo-item" data-index="25">
+                            <img src="img/img26.png" alt="Photo 25">
+                        </div>
+                        <div class="photo-item" data-index="26">
+                            <img src="img/img27.png" alt="Photo 26">
+                        </div>
+                        <div class="photo-item photo-item-message" data-index="27">
+                            <div class="final-message-slide">
+                                <p>Happy Valentine's Day นะคะ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thumbnail Strip (Below) -->
+        <div class="thumbnail-strip-section">
+            <div class="thumbnail-strip-container">
+                <div id="paperOutputStrip" class="paper-output-strip"></div>
+            </div>
+        </div>
+
+        <!-- Waveform Section -->
+        <div class="waveform-section">
+            <div id="waveformBars" class="waveform-bars"></div>
+            <div class="waveform-time">
+                <span id="currentTime">0:00</span>
+                <span class="time-separator">/</span>
+                <span id="totalTime">0:00</span>
+            </div>
+        </div>
+
+        <!-- Crank Section -->
+        <div class="crank-section">
+            <div id="crankArea" class="crank-area">
+                <div class="crank-base">
+                    <div class="crank-base-detail"></div>
+                </div>
+                <div id="crankHandle" class="crank-handle">
+                    <div class="crank-arm"></div>
+                    <div class="crank-knob"></div>
+                </div>
+            </div>
+            <p class="crank-instruction" id="crankInstruction">Turn the handle clockwise</p>
+        </div>
+    </div>
+
+    <!-- Final Reveal Overlay -->
+    <div id="finalReveal" class="final-reveal hidden">
+        <div id="particlesContainer" class="particles-container"></div>
+        <div class="reveal-content">
+            <div class="reveal-hearts">💕</div>
+            <h2 class="reveal-message" id="revealMessage">i love you so much</h2>
+            <button class="replay-btn" id="replayBtn">Play Again</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
