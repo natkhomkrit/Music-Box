@@ -12,7 +12,7 @@
     // ===== CONFIG =====
     const CONFIG = {
         TOTAL_PHOTOS: 27,
-        AUDIO_SRC: 'music.mp3',
+        AUDIO_SRC: 'music2.mp3',
         FADE_DURATION: 0.25,
         PAUSE_DEBOUNCE: 300,
         WAVEFORM_BARS: 50,
