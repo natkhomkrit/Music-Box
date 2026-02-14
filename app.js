@@ -126,10 +126,6 @@
     function startAudioPlayback() {
         if (!state.audioReady || !audioElement) return;
 
-        // Try connecting analyser on first play
-        if (!analyserNode) {
-            connectAnalyser();
-        }
         if (audioContext && audioContext.state === 'suspended') {
             audioContext.resume();
         }
@@ -435,8 +431,12 @@
         state.started = true;
 
         initAudio();
+        connectAnalyser();
 
-        // Unlock audio on mobile (must happen inside user gesture)
+        // Resume AudioContext + unlock audio on mobile (must happen inside user gesture)
+        if (audioContext && audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
         if (audioElement) {
             audioElement.play().then(() => {
                 audioElement.pause();
