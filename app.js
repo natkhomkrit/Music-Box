@@ -223,6 +223,11 @@
         e.preventDefault();
         state.isDragging = true;
 
+        // Resume audio context on user gesture (required for mobile)
+        if (audioContext && audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+
         const rect = crankArea.getBoundingClientRect();
         state.lastPointerAngle = getPointerAngle(e, rect);
 
@@ -287,8 +292,12 @@
 
     // ===== FLIPBOOK / PHOTO STRIP (crank-driven) =====
     function updatePhotoStrip() {
-        const photoHeight = photoStrip.parentElement.clientHeight;
-        const totalScrollHeight = photoHeight * (CONFIG.TOTAL_PHOTOS - 1);
+        const items = photoStrip.querySelectorAll('.photo-item');
+        if (items.length === 0) return;
+        const firstItem = items[0];
+        const style = getComputedStyle(firstItem);
+        const itemHeight = firstItem.offsetHeight + parseFloat(style.marginBottom || 0);
+        const totalScrollHeight = itemHeight * (items.length - 1);
         const offset = -state.photoProgress * totalScrollHeight;
         photoStrip.style.transform = `translateY(${offset}px)`;
     }

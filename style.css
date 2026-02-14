@@ -133,8 +133,7 @@ body {
 
 .photo-window-frame {
     width: 100%;
-    height: 312px;
-    /* 280px photo + 32px padding */
+    aspect-ratio: 1 / 1;
     background: #1a1a1a;
     border-radius: 12px;
     overflow: hidden;
@@ -193,7 +192,7 @@ body {
 
 .photo-item {
     width: 100%;
-    height: 280px;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 4px;
     margin-bottom: 12px;
@@ -222,7 +221,7 @@ body {
 .photo-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
 }
 
@@ -665,26 +664,246 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 380px) {
+
+/* iPhone XR and similar (414px) */
+@media (max-width: 430px) {
+    .music-box-container {
+        gap: 0.4rem;
+        padding: 0.75rem;
+    }
+
     .photo-window {
-        width: 220px;
-        height: 270px;
+        width: 65vw;
+        max-width: 280px;
+    }
+
+    .photo-window-frame {
+        padding: 10px 18px;
     }
 
     .photo-item {
-        height: 270px;
+        margin-bottom: 8px;
+    }
+
+    .photo-strip {
+        top: 10px;
+        left: 18px;
+        right: 18px;
+    }
+
+    .thumbnail-strip-section {
+        width: 68vw;
+        max-width: 290px;
     }
 
     .waveform-section {
-        width: 275px;
+        width: 68vw;
+        max-width: 290px;
+        padding: 0.5rem 0.75rem;
     }
 
-    .paper-feed {
-        width: 45px;
+    .waveform-bars {
+        height: 30px;
     }
 
-    .paper-output {
+    .crank-area {
+        width: 90px;
+        height: 90px;
+    }
+
+    .crank-arm {
+        width: 36px;
+    }
+
+    .crank-knob {
+        left: 30px;
+        width: 18px;
+        height: 18px;
+        top: -9px;
+    }
+
+    .crank-instruction {
+        font-size: 0.7rem;
+    }
+
+    .final-message-slide p {
+        font-size: 1.1rem;
+    }
+
+    .reveal-message {
+        font-size: 1.4rem;
+    }
+}
+
+/* Small phones (375px - iPhone SE, older models) */
+@media (max-width: 375px) {
+    .music-box-container {
+        gap: 0.3rem;
+        padding: 0.5rem;
+    }
+
+    .photo-window {
+        width: 62vw;
+        max-width: 240px;
+    }
+
+    .photo-window-frame {
+        padding: 8px 14px;
+    }
+
+    .photo-item {
+        margin-bottom: 6px;
+    }
+
+    .photo-strip {
+        top: 8px;
+        left: 14px;
+        right: 14px;
+    }
+
+    .thumbnail-strip-section {
+        width: 65vw;
+        max-width: 250px;
+    }
+
+    .thumbnail-strip-container {
+        height: 40px;
+    }
+
+    .paper-output-strip .paper-mini-photo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .waveform-section {
+        width: 65vw;
+        max-width: 250px;
+    }
+
+    .waveform-bars {
+        height: 28px;
+    }
+
+    .crank-area {
+        width: 80px;
+        height: 80px;
+    }
+
+    .crank-arm {
+        width: 32px;
+    }
+
+    .crank-knob {
+        left: 26px;
+        width: 16px;
+        height: 16px;
+        top: -8px;
+    }
+
+    .reveal-message {
+        font-size: 1.2rem;
+    }
+}
+
+/* Very small phones (320px) */
+@media (max-width: 340px) {
+    .photo-window {
+        width: 92vw;
+    }
+
+    .photo-item {
+        margin-bottom: 6px;
+    }
+
+    .thumbnail-strip-section {
+        width: 92vw;
+    }
+
+    .waveform-section {
+        width: 92vw;
+    }
+
+    .crank-area {
+        width: 90px;
+        height: 90px;
+    }
+
+    .crank-arm {
+        width: 35px;
+    }
+
+    .crank-knob {
+        left: 30px;
+        width: 16px;
+        height: 16px;
+        top: -8px;
+    }
+
+    .final-message-slide p {
+        font-size: 1rem;
+    }
+
+    .reveal-message {
+        font-size: 1.2rem;
+    }
+}
+
+/* iPad / Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .music-box-container {
+        gap: 0.6rem;
+        padding: 1.5rem;
+    }
+
+    .photo-window {
+        width: 300px;
+    }
+
+    .photo-window-frame {
+        padding: 14px 24px;
+    }
+
+    .photo-item {
+        margin-bottom: 10px;
+    }
+
+    .photo-strip {
+        top: 14px;
+        left: 24px;
+        right: 24px;
+    }
+
+    .thumbnail-strip-section {
+        width: 310px;
+    }
+
+    .thumbnail-strip-container {
+        height: 48px;
+    }
+
+    .paper-output-strip .paper-mini-photo {
         width: 40px;
+        height: 40px;
+    }
+
+    .waveform-section {
+        width: 340px;
+    }
+
+    .crank-area {
+        width: 120px;
+        height: 120px;
+    }
+
+    .crank-arm {
+        width: 48px;
+    }
+
+    .crank-knob {
+        left: 42px;
+        width: 22px;
+        height: 22px;
+        top: -11px;
     }
 
     .reveal-message {
@@ -692,33 +911,56 @@ body {
     }
 }
 
-@media (min-width: 768px) {
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+    .music-box-container {
+        gap: 0.8rem;
+        padding: 2rem;
+    }
+
     .photo-window {
-        width: 320px;
-        height: 400px;
+        width: 360px;
+    }
+
+    .photo-window-frame {
+        padding: 16px 28px;
     }
 
     .photo-item {
-        height: 400px;
+        margin-bottom: 12px;
+    }
+
+    .photo-strip {
+        top: 16px;
+        left: 28px;
+        right: 28px;
+    }
+
+    .thumbnail-strip-section {
+        width: 370px;
     }
 
     .waveform-section {
-        width: 375px;
+        width: 400px;
     }
 
     .crank-area {
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
     }
 
     .crank-arm {
-        width: 55px;
+        width: 60px;
     }
 
     .crank-knob {
-        left: 48px;
-        width: 24px;
-        height: 24px;
-        top: -12px;
+        left: 52px;
+        width: 26px;
+        height: 26px;
+        top: -13px;
+    }
+
+    .reveal-message {
+        font-size: 2rem;
     }
 }
