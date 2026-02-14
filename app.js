@@ -75,7 +75,6 @@
         analyserNode.connect(audioContext.destination);
 
         audioElement = new Audio(CONFIG.AUDIO_SRC);
-        audioElement.crossOrigin = 'anonymous';
         audioElement.preload = 'auto';
         audioElement.loop = false;
 
