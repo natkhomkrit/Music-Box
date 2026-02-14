@@ -422,6 +422,17 @@
 
         initAudio();
 
+        // Unlock audio on mobile (must happen inside user gesture)
+        if (audioContext && audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        if (audioElement) {
+            audioElement.play().then(() => {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+            }).catch(() => { });
+        }
+
         startScreen.style.transition = 'opacity 0.6s ease-out';
         startScreen.style.opacity = '0';
 
